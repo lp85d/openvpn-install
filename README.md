@@ -1,7 +1,4 @@
 # openvpn-install
-
-`https://raw.githubusercontent.com/lp85d/openvpn-install/refs/heads/main/openvpn-install.sh`
-
 ```
 https://raw.githubusercontent.com/lp85d/openvpn-install/refs/heads/main/openvpn-install.sh
 ```
