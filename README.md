@@ -1,5 +1,7 @@
 # openvpn-install
 
+`https://raw.githubusercontent.com/lp85d/openvpn-install/refs/heads/main/openvpn-install.sh`
+
 Да, этот скрипт выполняет следующие действия:
 
 1. **Проверка на root-права**: Проверяет, что скрипт выполняется с правами суперпользователя.
