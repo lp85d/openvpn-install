@@ -1,13 +1,25 @@
 nano auto-openvpn.sh
 #!/bin/bash
 
-# Автоматизация openvpn-install.sh с предустановленными переменными
+# Автоматическое добавление нового клиента OpenVPN
 
-export MENU_OPTION="1"  # Опция меню (1: добавить нового клиента)
-export CLIENT="foo"     # Имя клиента
-export PASS="1"         # Пароль (1: без пароля)
+CLIENT_NAME="slavik"
+PASS_OPTION="1"  # 1: без пароля, 2: с паролем
 
-./openvpn-install.sh
+# Запуск скрипта с автоматическим вводом через heredoc
+./openvpn-install.sh <<EOF
+1
+$CLIENT_NAME
+$PASS_OPTION
+EOF
+
+# Проверка наличия сгенерированного файла
+if [ -f "/root/$CLIENT_NAME.ovpn" ]; then
+    echo "✅ Конфигурация для клиента $CLIENT_NAME успешно создана: /root/$CLIENT_NAME.ovpn"
+else
+    echo "❌ Ошибка создания конфигурации для клиента $CLIENT_NAME"
+fi
+
 
 Затем:
 chmod +x auto-openvpn.sh
