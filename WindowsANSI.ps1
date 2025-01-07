@@ -1,50 +1,48 @@
-Set-ExecutionPolicy Bypass -Scope Process -Force
-
-if (!(Get-Command choco -ErrorAction SilentlyContinue)) {
-    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-}
-
-choco install openvpn -y
-
 $openVPNPath = "C:\Program Files\OpenVPN"
-$easyRSAPath = "C:\Program Files\OpenVPN\easy-rsa"
+$easyRSAPath = "$openVPNPath\easy-rsa"
 $configPath = "$openVPNPath\config"
 
+if (-Not (Test-Path $easyRSAPath)) {
+    $easyRSADownloadURL = "https://github.com/OpenVPN/easy-rsa/releases/download/v3.1.5/EasyRSA-3.1.5.zip"
+    $tempZipPath = "$env:TEMP\EasyRSA.zip"
+    Invoke-WebRequest -Uri $easyRSADownloadURL -OutFile $tempZipPath
+    Expand-Archive -Path $tempZipPath -DestinationPath $openVPNPath -Force
+    Rename-Item -Path "$openVPNPath\EasyRSA-3.1.5" -NewName "easy-rsa"
+    Remove-Item $tempZipPath
+}
+
 Set-Location $easyRSAPath
-Start-Process -FilePath "$easyRSAPath\EasyRSA-Start.bat" -Wait
-Start-Process -FilePath "$easyRSAPath\easyrsa.exe" -ArgumentList "init-pki" -Wait
-Start-Process -FilePath "$easyRSAPath\easyrsa.exe" -ArgumentList "build-ca nopass" -Wait
-Start-Process -FilePath "$easyRSAPath\easyrsa.exe" -ArgumentList "build-server-full server nopass" -Wait
-Start-Process -FilePath "$easyRSAPath\easyrsa.exe" -ArgumentList "gen-dh" -Wait
-& "$openVPNPath\bin\openvpn.exe" --genkey secret "$configPath\ta.key"
+
+if (-Not (Test-Path "$easyRSAPath\pki")) {
+    .\EasyRSA-Start.bat
+    .\easyrsa.exe init-pki
+}
+
+if (-Not (Test-Path "$easyRSAPath\pki\ca.crt")) {
+    .\easyrsa.exe build-ca nopass
+}
+
+if (-Not (Test-Path "$easyRSAPath\pki\issued\server.crt")) {
+    .\easyrsa.exe build-server-full server nopass
+}
+
+if (-Not (Test-Path "$easyRSAPath\pki\dh.pem")) {
+    .\easyrsa.exe gen-dh
+}
+
+if (-Not (Test-Path $configPath)) {
+    New-Item -Path $configPath -ItemType Directory
+}
 
 Copy-Item "$easyRSAPath\pki\ca.crt" "$configPath"
 Copy-Item "$easyRSAPath\pki\issued\server.crt" "$configPath"
 Copy-Item "$easyRSAPath\pki\private\server.key" "$configPath"
 Copy-Item "$easyRSAPath\pki\dh.pem" "$configPath"
 
-$serverConfig = @"
-port 1194
-proto udp
-dev tun
-ca ca.crt
-cert server.crt
-key server.key
-dh dh.pem
-tls-auth ta.key 0
-server 10.8.0.0 255.255.255.0
-ifconfig-pool-persist ipp.txt
-keepalive 10 120
-cipher AES-256-CBC
-persist-key
-persist-tun
-status openvpn-status.log
-log openvpn.log
-verb 3
-"@
+if (Get-ScheduledTask -TaskName "OpenVPN Server" -ErrorAction SilentlyContinue) {
+    Unregister-ScheduledTask -TaskName "OpenVPN Server" -Confirm:$false
+}
 
-$serverConfig | Out-File -Encoding ASCII "$configPath\server.ovpn"
-
-$action = New-ScheduledTaskAction -Execute "$openVPNPath\bin\openvpn.exe" -Argument "--config `"$configPath\server.ovpn`""
+$action = New-ScheduledTaskAction -Execute "$openVPNPath\bin\openvpn.exe" -Argument "server.ovpn"
 $trigger = New-ScheduledTaskTrigger -AtStartup
-Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "OpenVPN Server" -Description "Auto-start OpenVPN server"
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "OpenVPN Server" -Description "Start OpenVPN Server on system startup"
