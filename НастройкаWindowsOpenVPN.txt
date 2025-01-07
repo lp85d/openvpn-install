@@ -1,0 +1,25 @@
+Качаем easyrsa-tools.lib можно взять здесь https://github.com/OpenVPN/easy-rsa/archive/refs/tags/v3.2.1.zip
+Поместите файл easyrsa-tools.lib в папку C:/Program Files/OpenVPN/easy-rsa/
+
+Сначало подготовим среды:
+Команда setx делает изменения постоянными, добавляя путь в переменные окружения пользователя.
+setx PATH "%PATH%;C:\Program Files\OpenVPN\easy-rsa"
+setx PATH "%PATH%;C:\Program Files\OpenVPN\bin"
+Если вы хотите добавить путь только для текущей сессии, используйте set вместо setx
+where openvpn
+where easy-rsa
+
+easyrsa init-pki
+easyrsa build-ca nopass
+MyVPN-CA
+easyrsa build-server-full server nopass
+yes
+easyrsa gen-dh
+easyrsa build-client-full client1 nopass
+yes
+
+Если будут проблемы то вместо этой команды
+easyrsa gen-tls-crypt-v1
+используйте эту
+openvpn --genkey secret tls-crypt.key
+
