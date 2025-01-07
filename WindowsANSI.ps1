@@ -7,7 +7,7 @@ if (!(Get-Command choco -ErrorAction SilentlyContinue)) {
 choco install openvpn -y
 
 $openVPNPath = "C:\Program Files\OpenVPN"
-$easyRSAPath = "$openVPNPath\easy-rsa"
+$easyRSAPath = "C:\Program Files\OpenVPN\easy-rsa"
 $configPath = "$openVPNPath\config"
 
 Set-Location $easyRSAPath
@@ -16,7 +16,7 @@ Start-Process -FilePath "$easyRSAPath\easyrsa.exe" -ArgumentList "init-pki" -Wai
 Start-Process -FilePath "$easyRSAPath\easyrsa.exe" -ArgumentList "build-ca nopass" -Wait
 Start-Process -FilePath "$easyRSAPath\easyrsa.exe" -ArgumentList "build-server-full server nopass" -Wait
 Start-Process -FilePath "$easyRSAPath\easyrsa.exe" -ArgumentList "gen-dh" -Wait
-& "$openVPNPath\bin\openvpn.exe" --genkey --secret "$configPath\ta.key"
+& "$openVPNPath\bin\openvpn.exe" --genkey secret "$configPath\ta.key"
 
 Copy-Item "$easyRSAPath\pki\ca.crt" "$configPath"
 Copy-Item "$easyRSAPath\pki\issued\server.crt" "$configPath"
