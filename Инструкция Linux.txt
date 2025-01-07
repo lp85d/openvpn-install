@@ -1,8 +1,17 @@
-sudo nano /etc/ssh/sshd_config
-Заменить:
-tls-cipher TLS-ECDHE-ECDSA-WITH-AES-128-GCM-SHA256
-на:
-data-ciphers AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305
+nano auto-openvpn.sh
+#!/bin/bash
+
+# Автоматизация openvpn-install.sh с предустановленными переменными
+
+export MENU_OPTION="1"  # Опция меню (1: добавить нового клиента)
+export CLIENT="foo"     # Имя клиента
+export PASS="1"         # Пароль (1: без пароля)
+
+./openvpn-install.sh
+
+Затем:
+chmod +x auto-openvpn.sh
+./auto-openvpn.sh
 
 И здесь:
 C:\Windows\System32>scp root@83.147.255.66:/root/client.ovpn C:\user\Downloads\
