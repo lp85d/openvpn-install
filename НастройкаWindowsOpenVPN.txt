@@ -1,3 +1,6 @@
+Вот это не читал:
+https://community.openvpn.net/openvpn/wiki/Easy_Windows_Guide
+
 Качаем easyrsa-tools.lib можно взять здесь https://github.com/OpenVPN/easy-rsa/archive/refs/tags/v3.2.1.zip
 Поместите файл easyrsa-tools.lib в папку C:/Program Files/OpenVPN/easy-rsa/
 
