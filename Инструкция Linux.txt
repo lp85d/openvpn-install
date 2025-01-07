@@ -1,0 +1,10 @@
+sudo nano /etc/ssh/sshd_config
+Заменить:
+tls-cipher TLS-ECDHE-ECDSA-WITH-AES-128-GCM-SHA256
+на:
+data-ciphers AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305
+
+И здесь:
+C:\Windows\System32>scp root@83.147.255.66:/root/client.ovpn C:\user\Downloads\
+root@83.147.255.66's password:
+client.ovpn                                                                           100% 2771    57.7KB/s   00:00
