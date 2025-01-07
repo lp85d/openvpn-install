@@ -32,6 +32,12 @@ try {
         if ($null -eq $extractedFolder) {
             throw "Extraction failed: Folder not found."
         }
+
+        # Удаляем папку easy-rsa, если она уже существует
+        if (Test-Path $easyRSAPath) {
+            Remove-Item -Path $easyRSAPath -Recurse -Force
+        }
+
         Rename-Item -Path $extractedFolder.FullName -NewName "easy-rsa"
         Remove-Item $tempZipPath -Force
     } else {
@@ -78,6 +84,11 @@ Write-Output "EasyRSA setup completed successfully."
 # Add task to Task Scheduler
 Write-Output "Configuring Task Scheduler..."
 try {
+    # Удаляем задачу, если она уже существует
+    if (Get-ScheduledTask -TaskName "OpenVPN Server" -ErrorAction SilentlyContinue) {
+        Unregister-ScheduledTask -TaskName "OpenVPN Server" -Confirm:$false
+    }
+    
     $taskAction = New-ScheduledTaskAction -Execute "$openVPNPath\bin\openvpn.exe" -Argument "--config $configPath\server.ovpn"
     $taskTrigger = New-ScheduledTaskTrigger -AtStartup
     $taskSettings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
