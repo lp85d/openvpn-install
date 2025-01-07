@@ -1,0 +1,301 @@
+root@debian:~# curl -O https://raw.githubusercontent.com/angristan/openvpn-install/master/openvpn-install.sh
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 41851  100 41851    0     0   297k      0 --:--:-- --:--:-- --:--:--  300k
+root@debian:~# chmod +x openvpn-install.sh
+root@debian:~# ./openvpn-install.sh
+Welcome to the OpenVPN installer!
+The git repository is available at: https://github.com/angristan/openvpn-install
+
+I need to ask you a few questions before starting the setup.
+You can leave the default options and just press enter if you are ok with them.
+
+I need to know the IPv4 address of the network interface you want OpenVPN listening to.
+Unless your server is behind NAT, it should be your public IPv4 address.
+IP address: 10.0.2.15
+
+It seems this server is behind NAT. What is its public IPv4 address or hostname?
+We need it for the clients to connect to the server.
+Public IPv4 address or hostname: 83.147.255.66
+
+Checking for IPv6 connectivity...
+
+Your host does not appear to have IPv6 connectivity.
+
+Do you want to enable IPv6 support (NAT)? [y/n]: n
+
+What port do you want OpenVPN to listen to?
+   1) Default: 1194
+   2) Custom
+   3) Random [49152-65535]
+Port choice [1-3]: 1
+
+What protocol do you want OpenVPN to use?
+UDP is faster. Unless it is not available, you shouldn't use TCP.
+   1) UDP
+   2) TCP
+Protocol [1-2]: 1
+
+What DNS resolvers do you want to use with the VPN?
+   1) Current system resolvers (from /etc/resolv.conf)
+   2) Self-hosted DNS Resolver (Unbound)
+   3) Cloudflare (Anycast: worldwide)
+   4) Quad9 (Anycast: worldwide)
+   5) Quad9 uncensored (Anycast: worldwide)
+   6) FDN (France)
+   7) DNS.WATCH (Germany)
+   8) OpenDNS (Anycast: worldwide)
+   9) Google (Anycast: worldwide)
+   10) Yandex Basic (Russia)
+   11) AdGuard DNS (Anycast: worldwide)
+   12) NextDNS (Anycast: worldwide)
+   13) Custom
+DNS [1-12]: 11
+
+Do you want to use compression? It is not recommended since the VORACLE attack makes use of it.
+Enable compression? [y/n]: n
+
+Do you want to customize encryption settings?
+Unless you know what you're doing, you should stick with the default parameters provided by the script.
+Note that whatever you choose, all the choices presented in the script are safe. (Unlike OpenVPN's defaults)
+See https://github.com/angristan/openvpn-install#security-and-encryption to learn more.
+
+Customize encryption settings? [y/n]: n
+
+Okay, that was all I needed. We are ready to setup your OpenVPN server now.
+You will be able to generate a client at the end of the installation.
+Press any key to continue...
+Hit:1 http://deb.debian.org/debian bookworm InRelease
+Hit:2 http://security.debian.org/debian-security bookworm-security InRelease
+Hit:3 http://deb.debian.org/debian bookworm-updates InRelease
+Reading package lists... Done
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+ca-certificates is already the newest version (20230311).
+gnupg is already the newest version (2.2.40-1.1).
+gnupg set to manually installed.
+0 upgraded, 0 newly installed, 0 to remove and 130 not upgraded.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+openvpn is already the newest version (2.6.3-1+deb12u2).
+wget is already the newest version (1.21.3-1+b2).
+ca-certificates is already the newest version (20230311).
+curl is already the newest version (7.88.1-10+deb12u8).
+The following additional packages will be installed:
+  libip6tc2 libssl3
+Suggested packages:
+  firewalld
+The following NEW packages will be installed:
+  iptables libip6tc2
+The following packages will be upgraded:
+  libssl3 openssl
+2 upgraded, 2 newly installed, 0 to remove and 128 not upgraded.
+Need to get 3,832 kB of archives.
+After this operation, 2,534 kB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian bookworm/main amd64 libip6tc2 amd64 1.8.9-2 [19.4 kB]
+Get:2 http://deb.debian.org/debian bookworm/main amd64 iptables amd64 1.8.9-2 [360 kB]
+Get:3 http://deb.debian.org/debian bookworm/main amd64 libssl3 amd64 3.0.15-1~deb12u1 [2,025 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 openssl amd64 3.0.15-1~deb12u1 [1,427 kB]
+Fetched 3,832 kB in 0s (13.7 MB/s)
+apt-listchanges: Reading changelogs...
+Selecting previously unselected package libip6tc2:amd64.
+(Reading database ... 136916 files and directories currently installed.)
+Preparing to unpack .../libip6tc2_1.8.9-2_amd64.deb ...
+Unpacking libip6tc2:amd64 (1.8.9-2) ...
+Selecting previously unselected package iptables.
+Preparing to unpack .../iptables_1.8.9-2_amd64.deb ...
+Unpacking iptables (1.8.9-2) ...
+Preparing to unpack .../libssl3_3.0.15-1~deb12u1_amd64.deb ...
+Unpacking libssl3:amd64 (3.0.15-1~deb12u1) over (3.0.14-1~deb12u1) ...
+Preparing to unpack .../openssl_3.0.15-1~deb12u1_amd64.deb ...
+Unpacking openssl (3.0.15-1~deb12u1) over (3.0.14-1~deb12u1) ...
+Setting up libip6tc2:amd64 (1.8.9-2) ...
+Setting up libssl3:amd64 (3.0.15-1~deb12u1) ...
+Setting up openssl (3.0.15-1~deb12u1) ...
+Setting up iptables (1.8.9-2) ...
+update-alternatives: using /usr/sbin/iptables-legacy to provide /usr/sbin/iptables (iptables) in auto mode
+update-alternatives: using /usr/sbin/ip6tables-legacy to provide /usr/sbin/ip6tables (ip6tables) in auto mode
+update-alternatives: using /usr/sbin/iptables-nft to provide /usr/sbin/iptables (iptables) in auto mode
+update-alternatives: using /usr/sbin/ip6tables-nft to provide /usr/sbin/ip6tables (ip6tables) in auto mode
+update-alternatives: using /usr/sbin/arptables-nft to provide /usr/sbin/arptables (arptables) in auto mode
+update-alternatives: using /usr/sbin/ebtables-nft to provide /usr/sbin/ebtables (ebtables) in auto mode
+Processing triggers for man-db (2.11.2-2) ...
+Processing triggers for libc-bin (2.36-9+deb12u8) ...
+--2025-01-07 06:31:48--  https://github.com/OpenVPN/easy-rsa/releases/download/v3.1.2/EasyRSA-3.1.2.tgz
+Resolving github.com (github.com)... 4.225.11.194
+Connecting to github.com (github.com)|4.225.11.194|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://objects.githubusercontent.com/github-production-release-asset-2e65be/4519663/c2688102-7cd5-4fcc-b272-083d48dc4b4d?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=releaseassetproduction%2F20250107%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250107T124316Z&X-Amz-Expires=300&X-Amz-Signature=f78c8d24e71f3e08b19ade0747ef62d83f673aac2f5b6c6716071d2b7d4b4057&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3DEasyRSA-3.1.2.tgz&response-content-type=application%2Foctet-stream [following]
+--2025-01-07 06:31:49--  https://objects.githubusercontent.com/github-production-release-asset-2e65be/4519663/c2688102-7cd5-4fcc-b272-083d48dc4b4d?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=releaseassetproduction%2F20250107%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250107T124316Z&X-Amz-Expires=300&X-Amz-Signature=f78c8d24e71f3e08b19ade0747ef62d83f673aac2f5b6c6716071d2b7d4b4057&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3DEasyRSA-3.1.2.tgz&response-content-type=application%2Foctet-stream
+Resolving objects.githubusercontent.com (objects.githubusercontent.com)... 185.199.110.133, 185.199.109.133, 185.199.108.133, ...
+Connecting to objects.githubusercontent.com (objects.githubusercontent.com)|185.199.110.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 68984 (67K) [application/octet-stream]
+Saving to: ‘/root/easy-rsa.tgz’
+
+/root/easy-rsa.tgz                        100%[=====================================================================================>]  67.37K  --.-KB/s    in 0.04s
+
+2025-01-07 06:31:49 (1.84 MB/s) - ‘/root/easy-rsa.tgz’ saved [68984/68984]
+
+
+Notice
+------
+'init-pki' complete; you may now create a CA or requests.
+
+Your newly created PKI dir is:
+* /etc/openvpn/easy-rsa/pki
+
+* Using Easy-RSA configuration: /etc/openvpn/easy-rsa/vars
+
+* The preferred location for 'vars' is within the PKI folder.
+  To silence this message move your 'vars' file to your PKI
+  or declare your 'vars' file with option: --vars=<FILE>
+
+* Using x509-types directory: /etc/openvpn/easy-rsa/x509-types
+
+
+* Using SSL: openssl OpenSSL 3.0.15 3 Sep 2024 (Library: OpenSSL 3.0.15 3 Sep 2024)
+
+* Using Easy-RSA configuration: /etc/openvpn/easy-rsa/vars
+
+* The preferred location for 'vars' is within the PKI folder.
+  To silence this message move your 'vars' file to your PKI
+  or declare your 'vars' file with option: --vars=<FILE>
+Using configuration from /etc/openvpn/easy-rsa/pki/51eaefb7/temp.c3a16d77
+-----
+
+Notice
+------
+CA creation complete and you may now import and sign cert requests.
+Your new CA certificate file for publishing is at:
+/etc/openvpn/easy-rsa/pki/ca.crt
+
+* Using SSL: openssl OpenSSL 3.0.15 3 Sep 2024 (Library: OpenSSL 3.0.15 3 Sep 2024)
+
+* Using Easy-RSA configuration: /etc/openvpn/easy-rsa/vars
+
+* The preferred location for 'vars' is within the PKI folder.
+  To silence this message move your 'vars' file to your PKI
+  or declare your 'vars' file with option: --vars=<FILE>
+-----
+
+Notice
+------
+Keypair and certificate request completed. Your files are:
+req: /etc/openvpn/easy-rsa/pki/reqs/server_EuxpAEpdgucAZYrW.req
+key: /etc/openvpn/easy-rsa/pki/private/server_EuxpAEpdgucAZYrW.key
+Using configuration from /etc/openvpn/easy-rsa/pki/f4357cf4/temp.486480f4
+Check that the request matches the signature
+Signature ok
+The Subject's Distinguished Name is as follows
+commonName            :ASN.1 12:'server_EuxpAEpdgucAZYrW'
+Certificate is to be certified until Jan  5 12:31:50 2035 GMT (3650 days)
+
+Write out database with 1 new entries
+Database updated
+
+Notice
+------
+Certificate created at:
+* /etc/openvpn/easy-rsa/pki/issued/server_EuxpAEpdgucAZYrW.crt
+
+Notice
+------
+Inline file created:
+* /etc/openvpn/easy-rsa/pki/inline/server_EuxpAEpdgucAZYrW.inline
+
+* Using SSL: openssl OpenSSL 3.0.15 3 Sep 2024 (Library: OpenSSL 3.0.15 3 Sep 2024)
+
+* Using Easy-RSA configuration: /etc/openvpn/easy-rsa/vars
+
+* The preferred location for 'vars' is within the PKI folder.
+  To silence this message move your 'vars' file to your PKI
+  or declare your 'vars' file with option: --vars=<FILE>
+Using configuration from /etc/openvpn/easy-rsa/pki/36ab37dd/temp.9bfd246e
+
+Notice
+------
+An updated CRL has been created.
+CRL file: /etc/openvpn/easy-rsa/pki/crl.pem
+
+2025-01-07 06:31:50 DEPRECATED OPTION: The option --secret is deprecated.
+2025-01-07 06:31:50 WARNING: Using --genkey --secret filename is DEPRECATED.  Use --genkey secret filename instead.
+* Applying /usr/lib/sysctl.d/50-bubblewrap.conf ...
+* Applying /usr/lib/sysctl.d/50-pid-max.conf ...
+* Applying /etc/sysctl.d/99-openvpn.conf ...
+* Applying /usr/lib/sysctl.d/99-protect-links.conf ...
+* Applying /etc/sysctl.d/99-sysctl.conf ...
+* Applying /etc/sysctl.conf ...
+kernel.unprivileged_userns_clone = 1
+kernel.pid_max = 4194304
+net.ipv4.ip_forward = 1
+fs.protected_fifos = 1
+fs.protected_hardlinks = 1
+fs.protected_regular = 2
+fs.protected_symlinks = 1
+Created symlink /etc/systemd/system/multi-user.target.wants/openvpn@server.service → /etc/systemd/system/openvpn@.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/iptables-openvpn.service → /etc/systemd/system/iptables-openvpn.service.
+
+Tell me a name for the client.
+The name must consist of alphanumeric character. It may also include an underscore or a dash.
+Client name: client
+
+Do you want to protect the configuration file with a password?
+(e.g. encrypt the private key with a password)
+   1) Add a passwordless client
+   2) Use a password for the client
+Select an option [1-2]: 1
+
+* Using SSL: openssl OpenSSL 3.0.15 3 Sep 2024 (Library: OpenSSL 3.0.15 3 Sep 2024)
+
+* Using Easy-RSA configuration: /etc/openvpn/easy-rsa/vars
+
+* The preferred location for 'vars' is within the PKI folder.
+  To silence this message move your 'vars' file to your PKI
+  or declare your 'vars' file with option: --vars=<FILE>
+-----
+
+Notice
+------
+Keypair and certificate request completed. Your files are:
+req: /etc/openvpn/easy-rsa/pki/reqs/client.req
+key: /etc/openvpn/easy-rsa/pki/private/client.key
+Using configuration from /etc/openvpn/easy-rsa/pki/6262ddee/temp.63232086
+Check that the request matches the signature
+Signature ok
+The Subject's Distinguished Name is as follows
+commonName            :ASN.1 12:'client'
+Certificate is to be certified until Jan  5 12:32:21 2035 GMT (3650 days)
+
+Write out database with 1 new entries
+Database updated
+
+Notice
+------
+Certificate created at:
+* /etc/openvpn/easy-rsa/pki/issued/client.crt
+
+Notice
+------
+Inline file created:
+* /etc/openvpn/easy-rsa/pki/inline/client.inline
+Client client added.
+
+The configuration file has been written to /root/client.ovpn.
+Download the .ovpn file and import it in your OpenVPN client.
+root@debian:~# sudo iptables -L -v -n
+Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+    0     0 ACCEPT     17   --  enp0s3 *       0.0.0.0/0            0.0.0.0/0            udp dpt:1194
+    0     0 ACCEPT     0    --  tun0   *       0.0.0.0/0            0.0.0.0/0
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+    0     0 ACCEPT     0    --  tun0   enp0s3  0.0.0.0/0            0.0.0.0/0
+    0     0 ACCEPT     0    --  enp0s3 tun0    0.0.0.0/0            0.0.0.0/0
+
+Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+root@debian:~#
