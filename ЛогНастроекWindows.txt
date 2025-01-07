@@ -1,0 +1,240 @@
+Easy-RSA starting..
+
+Welcome to the EasyRSA 3 Shell for Windows.
+Easy-RSA 3 is available under a GNU GPLv2 license.
+
+Invoke 'easyrsa' to call the program. Without commands, help is displayed.
+
+Using directory: C:/Program Files/OpenVPN/easy-rsa
+
+
+EasyRSA Shell
+# easyrsa init-pki
+
+Notice
+------
+'init-pki' complete; you may now create a CA or requests.
+
+Your newly created PKI dir is:
+* C:/Program Files/OpenVPN/easy-rsa/pki
+
+Using Easy-RSA configuration:
+* undefined
+
+EasyRSA Shell
+# easyrsa build-ca nopass
+.....+.....+....+........+...+...+.......+........+.+++++++++++++++++++++++++++++++++++++++*...+......+......+...............+.....+.........+.+...+..+......+.......+......+......+...+..+++++++++++++++++++++++++++++++++++++++*..+...+...........+....+..+....+...+...........+.+.....+.+..............+......+....+.....................+........+....+...+........+.........+......+.......+..+......+...............+......+...+.......+...........+....+.........+..+....+...+..+...+.............+..+...+....+......+.........+.....+...............+....+...........................+..+.+.........+...+..+.......+.....+................+..............+.........+....+...+...+.....................+...+...+..+...+....+.....+...............+.+.....+...+.+...+..+......+.............+.....+....+...+..+.+..+............+..........+...+..+.+......+........+.......+......+..............+.+........+....+........+...+.........+.+.........+..+......+....+......+............+..+.........+.++++++
+........+.+++++++++++++++++++++++++++++++++++++++*.+............+....+..............+.+..+............+++++++++++++++++++++++++++++++++++++++*.......+............+..+...+.+......+...........+....+..............+....+......+............+...+..+.........+......+............+.............+..+............+.+.....+..........+..+......+......+.++++++
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Common Name (eg: your user, host, or server name) [Easy-RSA CA]:MyVPN-CA
+
+Notice
+------
+CA creation complete. Your new CA certificate is at:
+* C:/Program Files/OpenVPN/easy-rsa/pki/ca.crt
+
+Create an OpenVPN TLS-AUTH|TLS-CRYPT-V1 key now: See 'help gen-tls'
+
+Build-ca completed successfully.
+
+
+EasyRSA Shell
+# easyrsa build-server-full server nopass
+.......+....+............+.....+++++++++++++++++++++++++++++++++++++++*............+...+.+++++++++++++++++++++++++++++++++++++++*.....+.......+.....+......++++++
+.+......+++++++++++++++++++++++++++++++++++++++*...+...+...+....+.......................+...+++++++++++++++++++++++++++++++++++++++*.........+.+........+.........+...+.......+..+.+...+...........+......+.........+.............+.....+......+......+...+......+.......+.........+.....+..........+...+...+...+............+.....++++++
+-----
+
+Notice
+------
+Private-Key and Public-Certificate-Request files created.
+Your files are:
+* req: C:/Program Files/OpenVPN/easy-rsa/pki/reqs/server.req
+* key: C:/Program Files/OpenVPN/easy-rsa/pki/private/server.key
+
+You are about to sign the following certificate:
+
+  Requested CN:     'server'
+  Requested type:   'server'
+  Valid for:        '825' days
+
+
+subject=
+    commonName                = server
+
+Type the word 'yes' to continue, or any other input to abort.
+  Confirm requested details: yes
+
+Using configuration from C:/Program Files/OpenVPN/easy-rsa/pki/c3f021c2/temp.6.1
+Check that the request matches the signature
+Signature ok
+The Subject's Distinguished Name is as follows
+commonName            :ASN.1 12:'server'
+Certificate is to be certified until Apr 12 08:05:21 2027 GMT (825 days)
+
+Write out database with 1 new entries
+Database updated
+which: no bc in (C:/Program Files/OpenVPN/easy-rsa;C:/Program Files/OpenVPN/easy-rsa/bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;)
+
+Notice
+------
+Inline file created:
+* C:/Program Files/OpenVPN/easy-rsa/pki/inline/private/server.inline
+
+
+Notice
+------
+Certificate created at:
+* C:/Program Files/OpenVPN/easy-rsa/pki/issued/server.crt
+
+
+EasyRSA Shell
+# easyrsa gen-dh
+Generating DH parameters, 2048 bit long safe prime
+.............................+................+.........................................................................................................................................................+.......................................................+.............+.....................................+..................................................................................................................+.............................................................................................................................................................................+...................................+...........................................................................................................................................................................................................................................................................................................................+...................................................................................................................+.......................................................................................+...............................................................................+...+.........+........................................................................................................................................................................................................................................................................................................................................................................................................................+.....................................................................................................................................................................................................+.........................................................................................................................+....................+..+..........+...........................................................................................................................................+............................+........................................................................................................................................................+.......................................................................................................................................................................................................+..................................................................................................................+.................................................................................................................................................................................................................................................................................................................................................+................................................................+..........................+.........................................................+........................................................+......................+...................................++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*
+DH parameters appear to be ok.
+
+Notice
+------
+
+DH parameters of size 2048 created at:
+* C:/Program Files/OpenVPN/easy-rsa/pki/dh.pem
+
+
+EasyRSA Shell
+# easyrsa build-client-full client1 nopass
+.........+..+++++++++++++++++++++++++++++++++++++++*.........+.........+....+++++++++++++++++++++++++++++++++++++++*...+.....+.............+...+.....+.........+...+...+.+.....+.+............+........+.......+......+......+...+........+..........+...+............+........+.+.....+...+...+.........+......+...+.+...........+...+...................+..+......+....+...+...+...+..+....+.....+...+.............+........+.+...+..+.........+......+.+...+............+............+..+...+...+....+...+...........+....+...+...............+.....+....+......+.....+............................+...........+...+......+....+.....+.++++++
+......+..+.+.........+.....+...+...+..........+..+++++++++++++++++++++++++++++++++++++++*.....+.+.....+++++++++++++++++++++++++++++++++++++++*.........+...+....+.....+.+.....+.+......+...+.....+....+.....+..........+......+.........+.....+.......+...........+...+.......+...+...........+.+..+.+............+..............+......+.......+..++++++
+-----
+
+Notice
+------
+Private-Key and Public-Certificate-Request files created.
+Your files are:
+* req: C:/Program Files/OpenVPN/easy-rsa/pki/reqs/client1.req
+* key: C:/Program Files/OpenVPN/easy-rsa/pki/private/client1.key
+
+You are about to sign the following certificate:
+
+  Requested CN:     'client1'
+  Requested type:   'client'
+  Valid for:        '825' days
+
+
+subject=
+    commonName                = client1
+
+Type the word 'yes' to continue, or any other input to abort.
+  Confirm requested details: yes
+
+Using configuration from C:/Program Files/OpenVPN/easy-rsa/pki/82ce7ccb/temp.6.1
+Check that the request matches the signature
+Signature ok
+The Subject's Distinguished Name is as follows
+commonName            :ASN.1 12:'client1'
+Certificate is to be certified until Apr 12 08:11:24 2027 GMT (825 days)
+
+Write out database with 1 new entries
+Database updated
+which: no bc in (C:/Program Files/OpenVPN/easy-rsa;C:/Program Files/OpenVPN/easy-rsa/bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;)
+
+Notice
+------
+Inline file created:
+* C:/Program Files/OpenVPN/easy-rsa/pki/inline/private/client1.inline
+
+
+Notice
+------
+Certificate created at:
+* C:/Program Files/OpenVPN/easy-rsa/pki/issued/client1.crt
+
+
+EasyRSA Shell
+# easyrsa gen-tls-crypt-v1
+
+EasyRSA version 3.2.1
+
+Error
+-----
+Missing: easyrsa-tools.lib
+
+Use of command 'gen-tls-crypt-v1' requires Easy-RSA tools library, source:
+* https://github.com/OpenVPN/easy-rsa/dev/easyrsa-tools.lib
+
+Place a copy of easyrsa-tools.lib in a standard system location.
+
+
+EasyRSA Shell
+# easyrsa gen-tls-crypt-v1
+which: no openvpn in (C:/Program Files/OpenVPN/easy-rsa;C:/Program Files/OpenVPN/easy-rsa/bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;)
+
+EasyRSA version 3.2.1
+
+Error
+-----
+Cannot find an OpenVPN binary.
+
+
+EasyRSA Shell
+# easyrsa gen-tls-crypt-v1
+which: no openvpn in (C:/Program Files/OpenVPN/easy-rsa;C:/Program Files/OpenVPN/easy-rsa/bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;)
+
+EasyRSA version 3.2.1
+
+Error
+-----
+Cannot find an OpenVPN binary.
+
+
+EasyRSA Shell
+# easyrsa gen-tls-crypt-v1
+which: no openvpn in (C:/Program Files/OpenVPN/easy-rsa;C:/Program Files/OpenVPN/easy-rsa/bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;)
+
+EasyRSA version 3.2.1
+
+Error
+-----
+Cannot find an OpenVPN binary.
+
+
+EasyRSA Shell
+# easyrsa gen-tls-crypt-v1"C:\Program Files\OpenVPN\easy-rsa\easyrsa" gen-tls-crypt-v1
+which: no openvpn in (C:/Program Files/OpenVPN/easy-rsa;C:/Program Files/OpenVPN/easy-rsa/bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;)
+
+EasyRSA version 3.2.1
+
+Error
+-----
+Cannot find an OpenVPN binary.
+
+
+EasyRSA Shell
+# "C:\Program Files\OpenVPN\easy-rsa\easyrsa" gen-tls-crypt-v1
+which: no openvpn in (C:/Program Files/OpenVPN/easy-rsa;C:/Program Files/OpenVPN/easy-rsa/bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;)
+
+EasyRSA version 3.2.1
+
+Error
+-----
+Cannot find an OpenVPN binary.
+
+
+EasyRSA Shell
+# easyrsa gen-tls-crypt-v1
+which: no openvpn in (C:/Program Files/OpenVPN/easy-rsa;C:/Program Files/OpenVPN/easy-rsa/bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;)
+
+EasyRSA version 3.2.1
+
+Error
+-----
+Cannot find an OpenVPN binary.
+
+
+EasyRSA Shell
+#
